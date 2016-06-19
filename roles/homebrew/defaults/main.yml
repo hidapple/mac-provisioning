@@ -1,0 +1,12 @@
+homebrew_packages:
+  - wget
+  - git
+  - nkf
+  - lua
+  - tmux
+  - { name: vim, install_options: with-lua }
+  - { name: zsh, install_options: without-etcdir }
+  - { name: openssl, state: linked, install_options: force }
+  - rbenv
+  - readline
+  - ruby-build

@@ -1,8 +1,6 @@
-- host: localhost
+- hosts: localhost
   connection: local
   gather_facts: no
-  sudo: no
+  become: no
   roles:
     - homebrew
-    - zsh
-    - ruby
