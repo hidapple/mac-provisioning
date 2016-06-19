@@ -1,13 +1,17 @@
+- name: Get latest Ruby
+  shell: rbenv install -l | grep -v - | tail -1
+  register: latest_version
+
 - name: Check installed ruby
-  shell: rbenv versions | grep {{ version }}
+  shell: rbenv versions | grep {{ latest_version.stdout }}
   changed_when: False
   failed_when: False
   register: result
 
 - name: Install Ruby
-  shell: rbenv install {{ version }}
+  shell: rbenv install {{ latest_version.stdout }}
   when: result | failed
 
-- name: Set global version to {{ global_version }}
-  shell: rbenv global {{ global_version }}
+- name: Set global version to {{ latest_version.stdout }}
+  shell: rbenv global {{ latest_version.stdout }}
 

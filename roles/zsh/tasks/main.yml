@@ -3,7 +3,7 @@
   register: which_zsh
   ignore_errors: True
 
-- name: Check current login chell
+- name: Check current login shell
   shell: echo $SHELL
   register: current_shell
 
