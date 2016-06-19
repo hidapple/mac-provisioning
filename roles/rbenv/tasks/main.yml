@@ -1,0 +1,13 @@
+- name: Check installed ruby
+  shell: rbenv versions | grep {{ version }}
+  changed_when: False
+  failed_when: False
+  register: result
+
+- name: Install Ruby
+  shell: rbenv install {{ version }}
+  when: result | failed
+
+- name: Set global version to {{ global_version }}
+  shell: rbenv global {{ global_version }}
+
