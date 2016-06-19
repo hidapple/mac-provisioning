@@ -1,0 +1,16 @@
+- name: Get zsh path
+  shell: which zsh
+  register: which_zsh
+  ignore_errors: True
+
+- name: Check current login chell
+  shell: echo $SHELL
+  register: current_shell
+
+- name: Change login shell to zsh
+  shell: chsh -s {{ which_zsh.stdout }}
+  when: current_shell.stdout != which_zsh.stdout
+  register: result
+  until: result.rc == 0
+  retries: 3
+

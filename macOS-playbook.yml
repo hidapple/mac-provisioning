@@ -3,5 +3,6 @@
   gather_facts: no
   become: no
   roles:
-    # - homebrew
+    - homebrew
     - rbenv
+    - zsh
