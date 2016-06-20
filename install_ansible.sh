@@ -16,3 +16,6 @@ then
   brew install ansible
 fi
 
+### Execute ansible
+ansible-playbook -vv -i hosts macOS-playbook.yml
+
