@@ -7,14 +7,14 @@
   shell: echo $SHELL
   register: current_shell
 
-- name: Check /etc/shells
-  shell: cat /etc/shells | grep {{ current_shell.stdout }}
-  register: etc_shells
-
+- name: Check if zsh is registered in /etc/shells
+  shell: cat /etc/shells | grep {{ which_zsh.stdout }}
+  register: registered
+#
 - name: Add zsh pass in /etc/shells
   become: yes
   shell: echo {{ which_zsh.stdout }} >> /etc/shells
-  when: etc_shells.stdout != which_zsh.stdout
+  when: registered.rc == 1
 
 - name: Change default shell to zsh
   shell: chsh -s {{ which_zsh.stdout }}

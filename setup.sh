@@ -21,9 +21,11 @@ else
 fi
 
 ### Execute ansible
+echo "[INFO] Executing ansible."
 ansible-playbook -vv -i hosts macOS-playbook.yml -K
 
 ### Prepare .dotfiles
+echo "[INFO] Preparing dotfiles."
 dir=~/.dotfiles
 if [ -d $dir ]
 then
