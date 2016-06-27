@@ -7,7 +7,16 @@
   shell: echo $SHELL
   register: current_shell
 
-- name: Change login shell to zsh
+- name: Check /etc/shells
+  shell: cat /etc/shells | grep {{ current_shell.stdout }}
+  register: etc_shells
+
+- name: Add zsh pass in /etc/shells
+  become: yes
+  shell: echo {{ which_zsh.stdout }} >> /etc/shells
+  when: etc_shells.stdout != which_zsh.stdout
+
+- name: Change default shell to zsh
   shell: chsh -s {{ which_zsh.stdout }}
   when: current_shell.stdout != which_zsh.stdout
   register: result

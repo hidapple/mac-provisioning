@@ -21,7 +21,7 @@ else
 fi
 
 ### Execute ansible
-ansible-playbook -vv -i hosts macOS-playbook.yml
+ansible-playbook -vv -i hosts macOS-playbook.yml -K
 
 ### Prepare .dotfiles
 dir=~/.dotfiles
