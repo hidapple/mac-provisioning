@@ -34,8 +34,5 @@ else
   echo "[INFO] Creating .dotfiles"
   git clone https://github.com/hidapple/dotfiles.git ~/.dotfiles
   sh ~/.dotfiles/install.sh
-  echo "[INFO] Cloning Neobundle."
-  mkdir -p .vim/bundle
-  git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 fi
 
