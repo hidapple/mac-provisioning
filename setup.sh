@@ -33,6 +33,6 @@ then
 else
   echo "[INFO] Creating .dotfiles"
   git clone https://github.com/hidapple/dotfiles.git ~/.dotfiles
-  sh ~/.dotfiles/install.sh
+  sh ~/.dotfiles/link.sh
 fi
 

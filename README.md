@@ -1,3 +1,3 @@
 # macOS Provisioning with Ansible
-For easy provisioning of macOS.
+Easy provisioning for macOS
 
