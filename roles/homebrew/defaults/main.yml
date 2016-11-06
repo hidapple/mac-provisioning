@@ -4,7 +4,7 @@ homebrew_packages:
   - nkf
   - lua
   - tmux
-  - { name: vim, install_options: with-lua }
+  - { name: vim, install_options: with-lua, with-python3 }
   - { name: zsh, install_options: without-etcdir }
   - { name: openssl, state: linked, install_options: force }
   - rbenv
