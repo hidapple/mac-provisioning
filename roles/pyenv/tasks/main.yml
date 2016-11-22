@@ -1,3 +1,6 @@
+- name: Install pyenv with Homebrew
+  homebrew: name=pyenv
+
 - name: Install Python2.7.12
   shell: pyenv install 2.7.12
 
