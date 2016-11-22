@@ -11,4 +11,5 @@ homebrew_packages:
   - readline
   - ruby-build
   - gibo
+  - ack
 
