@@ -1,6 +1,6 @@
 - name: Get zsh path
   shell: which zsh
-  register: which_zsh
+  register: zsh_path
   ignore_errors: True
 
 - name: Check current login shell
@@ -8,17 +8,17 @@
   register: current_shell
 
 - name: Check if zsh is registered in /etc/shells
-  shell: cat /etc/shells | grep {{ which_zsh.stdout }}
-  register: registered
-#
+  shell: cat /etc/shells | grep {{ current_shell.stdout }}
+  register: etc_shells
+
 - name: Add zsh pass in /etc/shells
   become: yes
-  shell: echo {{ which_zsh.stdout }} >> /etc/shells
-  when: registered.rc == 1
+  shell: echo {{ zsh_path.stdout }} >> /etc/shells
+  when: etc_shells != zsh_path.stdout
 
 - name: Change default shell to zsh
-  shell: chsh -s {{ which_zsh.stdout }}
-  when: current_shell.stdout != which_zsh.stdout
+  shell: chsh -s {{ zsh_path.stdout }}
+  when: current_shell.stdout != zsh_path.stdout
   register: result
   until: result.rc == 0
   retries: 3
