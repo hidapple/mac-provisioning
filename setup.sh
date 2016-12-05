@@ -40,8 +40,8 @@ else
   echo "name: \c" && read name
   echo "email: \c" && read email
   echo "[user]" > ~/.gitconfig.local
-  echo "  name   = $name" >> ~/.gitconfig.local
-  echo "  email  = $email" >> ~/.gitconfig.local
+  echo "  name  = $name" >> ~/.gitconfig.local
+  echo "  email = $email" >> ~/.gitconfig.local
   echo "[INFO] Created ~/.gitconfig.local."
 fi
 
