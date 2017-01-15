@@ -3,6 +3,7 @@ homebrew_packages:
   - git
   - nkf
   - lua
+  - reattach-to-user-namespace
   - tmux
   - { name: vim, install_options: [ with-lua,with-python3 ] }
   - { name: zsh, install_options: without-etcdir }
