@@ -25,9 +25,6 @@
   shell: pyenv install {{ latest_python.stdout }}
   when: latest_exist | failed
 
-- name: Set Global Version to {{ latest_python.stdout }}
-  shell: pyenv global {{ latest_python.stdout }}
-
 - name: Get the latest anaconda
   shell: pyenv install --list | grep anaconda3 | tail -1
   register: latest_anaconda
@@ -41,4 +38,7 @@
 - name: Install anaconda
   shell: pyenv install {{ latest_anaconda.stdout }}
   when: latest_anaconda_exist | failed
+
+- name: Set Global
+  shell: pyenv global {{ latest_anaconda.stdout }}
 
