@@ -13,4 +13,6 @@ homebrew_packages:
   - ruby-build
   - gibo
   - ack
+  - tree
+  - jq
 
