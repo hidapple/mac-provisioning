@@ -15,4 +15,6 @@ homebrew_packages:
   - ack
   - tree
   - jq
+  - go
+  - peco
 
