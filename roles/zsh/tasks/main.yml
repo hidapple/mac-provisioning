@@ -8,13 +8,13 @@
   register: current_shell
 
 - name: Check if zsh is registered in /etc/shells
-  shell: cat /etc/shells | grep {{ current_shell.stdout }}
-  register: etc_shells
+  shell: cat /etc/shells | grep {{ zsh_path.stdout }}
+  register: zsh_included
 
-- name: Add zsh pass in /etc/shells
+- name: Add zsh path in /etc/shells if it's not included yet
   become: yes
   shell: echo {{ zsh_path.stdout }} >> /etc/shells
-  when: etc_shells != zsh_path.stdout
+  when: zsh_included.rc != 0
 
 - name: Change default shell to zsh
   shell: chsh -s {{ zsh_path.stdout }}
