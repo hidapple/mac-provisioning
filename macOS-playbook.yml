@@ -7,4 +7,6 @@
     - homebrew
     - rbenv
     - zsh
+    - go
+    - pip
 
