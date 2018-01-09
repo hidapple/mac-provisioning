@@ -17,4 +17,4 @@ homebrew_packages:
   - jq
   - go
   - peco
-
+  - ctags
