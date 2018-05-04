@@ -1,8 +1,8 @@
-# MacOS provisioning with Ansible
+# MacOS provisioning by Ansible
 Local env provisioning for MacOS.
 
-## How to
-Just clone and execute setup.sh!
+## Usage
+Just clone and execute `setup.sh`.
 
 ```shell
 $ sh setup.sh
