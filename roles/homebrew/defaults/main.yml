@@ -18,3 +18,4 @@ homebrew_packages:
   - go
   - peco
   - ctags
+  - tig
