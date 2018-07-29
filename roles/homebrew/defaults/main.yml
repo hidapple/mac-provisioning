@@ -6,6 +6,7 @@ homebrew_packages:
   - reattach-to-user-namespace
   - tmux
   - { name: vim, install_options: [ with-lua,with-python3 ] }
+  - neovim
   - { name: zsh, install_options: without-etcdir }
   - { name: openssl, state: linked, install_options: force }
   - rbenv

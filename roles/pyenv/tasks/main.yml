@@ -9,7 +9,7 @@
 
 - name: Install Python2.7.12
   shell: pyenv install 2.7.12
-  when: python2_exist | failed
+  when: python2_exist is failed
 
 - name: Get latest Python
   shell: pyenv install -l | grep -v - | tail -1
@@ -23,7 +23,7 @@
 
 - name: Install Python
   shell: pyenv install {{ latest_python.stdout }}
-  when: latest_exist | failed
+  when: latest_exist is failed
 
 - name: Get the latest anaconda
   shell: pyenv install --list | grep anaconda3 | tail -1
@@ -37,7 +37,7 @@
 
 - name: Install anaconda
   shell: pyenv install {{ latest_anaconda.stdout }}
-  when: latest_anaconda_exist | failed
+  when: latest_anaconda_exist is failed
 
 - name: Set Global
   shell: pyenv global {{ latest_anaconda.stdout }}
