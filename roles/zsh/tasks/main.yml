@@ -10,6 +10,7 @@
 - name: Check if zsh is registered in /etc/shells
   shell: cat /etc/shells | grep {{ zsh_path.stdout }}
   register: zsh_included
+  ignore_errors: True
 
 - name: Add zsh path in /etc/shells if it's not included yet
   become: yes
