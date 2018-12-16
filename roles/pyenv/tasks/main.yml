@@ -1,44 +1,40 @@
-- name: Install pyenv with Homebrew
+- name: Install pyenv by Homebrew
   homebrew: name=pyenv-virtualenv
 
-- name: Python2.7.12 check
-  shell: pyenv versions | grep 2.7.12
-  changed_when: False
-  failed_when: False
+- name: Python2 is installed?
+  shell: pyenv versions | grep 2.7.15
+  ignore_errors: True
   register: python2_exist
 
-- name: Install Python2.7.12
-  shell: pyenv install 2.7.12
+- name: Install Python2.7.15
+  shell: pyenv install 2.7.15
   when: python2_exist is failed
 
-- name: Get latest Python
+- name: The latest Python version
   shell: pyenv install -l | grep -v - | tail -1
   register: latest_python
 
-- name: Check installed Python
+- name: The latest Python is installed?
   shell: pyenv versions | grep {{ latest_python.stdout }}
-  changed_when: False
-  failed_when: False
+  ignore_errors: True
   register: latest_exist
 
-- name: Install Python
+- name: Install the latest Python
   shell: pyenv install {{ latest_python.stdout }}
   when: latest_exist is failed
 
-- name: Get the latest anaconda
+- name: The latest anaconda
   shell: pyenv install --list | grep anaconda3 | tail -1
   register: latest_anaconda
 
-- name: Check installed anaconda
+- name: The latest anacond is installed?
   shell: pyenv versions | grep {{ latest_anaconda.stdout }}
-  changed_when: False
-  failed_when: False
+  ignore_errors: True
   register: latest_anaconda_exist
 
-- name: Install anaconda
+- name: Install the latest anaconda
   shell: pyenv install {{ latest_anaconda.stdout }}
   when: latest_anaconda_exist is failed
 
-- name: Set Global
+- name: Set global Python to {{ latest_anaconda.stdout }}
   shell: pyenv global {{ latest_anaconda.stdout }}
-
