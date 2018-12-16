@@ -20,3 +20,4 @@ homebrew_packages:
   - peco
   - ctags
   - tig
+  - direnv
