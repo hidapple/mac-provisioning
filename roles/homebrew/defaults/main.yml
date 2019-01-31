@@ -21,3 +21,4 @@ homebrew_packages:
   - ctags
   - tig
   - direnv
+  - ansifilter # For tmux-logging
