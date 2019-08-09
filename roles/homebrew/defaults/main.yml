@@ -17,7 +17,7 @@ homebrew_packages:
   - tree
   - jq
   - go
-  - peco
+  - fzf
   - ctags
   - tig
   - direnv
