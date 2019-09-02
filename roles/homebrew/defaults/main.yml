@@ -5,9 +5,9 @@ homebrew_packages:
   - lua
   - reattach-to-user-namespace
   - tmux
-  - { name: vim, install_options: [ with-lua,with-python3 ] }
+  - vim
   - neovim
-  - { name: zsh, install_options: without-etcdir }
+  - zsh
   - { name: openssl, state: linked, install_options: force }
   - rbenv
   - readline
