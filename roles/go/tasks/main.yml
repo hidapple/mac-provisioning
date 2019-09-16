@@ -1,2 +1,0 @@
-- name: Get ghq
-  shell: go get github.com/motemen/ghq
