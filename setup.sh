@@ -30,18 +30,19 @@ else
   echo "[INFO] Creating .dotfiles"
   git clone https://github.com/hidapple/dotfiles.git ~/.dotfiles
   sh ~/.dotfiles/link.sh
+  source ~/.zshrc
 fi
 
 ### Create .gitconfig.local
 echo "[INFO] Create .gitconfig.local."
-if [ -f ~/.gitconfig.local ]; then
-  echo "[INFO] .gitconfig.local already exists."
+if [ -f $XDG_CONFIG_HOME/git/config.local ]; then
+  echo "[INFO] git local config file already exists."
 else
   echo "name: \c" && read name
   echo "email: \c" && read email
-  echo "[user]" > ~/.gitconfig.local
-  echo "  name  = $name" >> ~/.gitconfig.local
-  echo "  email = $email" >> ~/.gitconfig.local
-  echo "[INFO] Created ~/.gitconfig.local."
+  echo "[user]" > $XDG_CONFIG_HOME/git/config.local
+  echo "  name  = $name" >> $XDG_CONFIG_HOME/git/config.local
+  echo "  email = $email" >> $XDG_CONFIG_HOME/git/config.local
+  echo "[INFO] Created git local config file."
 fi
 
