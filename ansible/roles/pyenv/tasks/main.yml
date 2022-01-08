@@ -23,18 +23,5 @@
   shell: pyenv install {{ latest_python.stdout }}
   when: latest_exist is failed
 
-- name: The latest anaconda
-  shell: pyenv install --list | grep anaconda3 | tail -1
-  register: latest_anaconda
-
-- name: The latest anacond is installed?
-  shell: pyenv versions | grep {{ latest_anaconda.stdout }}
-  ignore_errors: True
-  register: latest_anaconda_exist
-
-- name: Install the latest anaconda
-  shell: pyenv install {{ latest_anaconda.stdout }}
-  when: latest_anaconda_exist is failed
-
 - name: Set global Python to {{ latest_anaconda.stdout }}
-  shell: pyenv global {{ latest_anaconda.stdout }}
+  shell: pyenv global {{ latest_python.stdout }}
