@@ -1,15 +1,7 @@
 - name: Tap Homebrew repository
   homebrew_tap:
-    name: sanemat/font
+    name: cask-fonts/font
 
 - name: Install ricty
   homebrew:
-    name: ricty
-
-- name: Copy font
-  shell: cp /usr/local/Cellar/ricty/*/share/fonts/Ricty*.ttf ~/Library/Fonts
-
-- name: Update font cache
-  shell: fc-cache -vf
-
-
+    name: font-ricty-diminished

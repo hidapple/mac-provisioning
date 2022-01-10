@@ -29,6 +29,8 @@ if [ -d ~/.dotfiles ]; then
 else
   echo "[INFO] Creating .dotfiles"
   git clone https://github.com/hidapple/dotfiles.git ~/.dotfiles
+  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   sh ~/.dotfiles/link.sh
   source ~/.zshrc
 fi
