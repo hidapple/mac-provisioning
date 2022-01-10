@@ -6,22 +6,18 @@
   ignore_errors: True
   register: python2_exist
 
-- name: Install Python2.7.15
+- name: Install Python2
   shell: pyenv install 2.7.15
   when: python2_exist is failed
 
-- name: The latest Python version
-  shell: pyenv install -l | grep -v - | tail -1
-  register: latest_python
-
-- name: The latest Python is installed?
-  shell: pyenv versions | grep {{ latest_python.stdout }}
+- name: Python3 is installed?
+  shell: pyenv versions 3.10.1
   ignore_errors: True
-  register: latest_exist
+  register: python3_exist
 
-- name: Install the latest Python
-  shell: pyenv install {{ latest_python.stdout }}
-  when: latest_exist is failed
+- name: Install Python3
+  shell: pyenv install 3.10.1
+  when: python3_exist is failed
 
-- name: Set global Python to {{ latest_anaconda.stdout }}
-  shell: pyenv global {{ latest_python.stdout }}
+- name: Set global Python
+  shell: pyenv global 3.10.1
