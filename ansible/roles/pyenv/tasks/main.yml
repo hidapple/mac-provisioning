@@ -21,3 +21,6 @@
 
 - name: Set global Python
   shell: pyenv global 3.10.1
+
+- name: Install pyenvim
+  shell: python3 -m pip install pynvim
