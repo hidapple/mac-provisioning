@@ -1,7 +1,0 @@
-- name: Tap Homebrew repository
-  homebrew_tap:
-    name: cask-fonts/font
-
-- name: Install ricty
-  homebrew:
-    name: font-ricty-diminished

@@ -1,2 +1,0 @@
-- name: Install flake8
-  shell: pip install flake8
