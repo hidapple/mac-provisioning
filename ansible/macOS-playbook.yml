@@ -3,9 +3,5 @@
   gather_facts: no
   become: no
   roles:
-    - pyenv
     - homebrew
-    - rbenv
     - zsh
-    - pip
-    - ricty
