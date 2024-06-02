@@ -20,7 +20,7 @@ fi
 
 ### Execute ansible
 echo "[INFO] Executing ansible."
-ansible-playbook -vv -i ansible/hosts ansible/macOS-playbook.yml -K
+ansible-playbook -vv -i ansible/hosts ansible/playbook.yml -K
 
 ### Prepare .dotfiles
 echo "[INFO] Preparing dotfiles."

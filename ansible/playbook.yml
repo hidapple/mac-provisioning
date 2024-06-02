@@ -5,3 +5,5 @@
   roles:
     - homebrew
     - zsh
+    - asdf
+    - pip # for nvim
