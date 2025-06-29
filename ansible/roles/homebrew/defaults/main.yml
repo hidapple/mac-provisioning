@@ -20,4 +20,4 @@ homebrew_packages:
   - ansifilter # For tmux-logging
   - ghq
   - kube-ps1
-  - asdf
+  - mise
