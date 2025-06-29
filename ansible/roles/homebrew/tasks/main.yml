@@ -1,8 +1,8 @@
 - name: Update Homebrew
-  homebrew: update_homebrew=yes
+  community.general.homebrew: update_homebrew=yes
 
 - name: Install Homebrew packages
-  homebrew:
+  community.general.homebrew:
     name={{ item.name | default(item) }}
     state={{ item.state | default('latest') }}
     install_options={{ item.install_options | default() }}
