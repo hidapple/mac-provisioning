@@ -7,17 +7,13 @@ homebrew_packages:
   - tmux
   - vim
   - neovim
-  - zsh
+  - fish
   - { name: openssl, state: linked, install_options: force }
-  - gibo
   - ag
   - tree
   - jq
   - fzf
   - ctags
-  - tig
-  - direnv
-  - ansifilter # For tmux-logging
   - ghq
   - kube-ps1
   - mise

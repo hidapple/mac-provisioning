@@ -4,6 +4,6 @@
   become: no
   roles:
     - homebrew
-    - zsh
+    - fish
     - mise
     - pip # for nvim

@@ -18,6 +18,9 @@ else
   echo "[INFO] ansible is already installed."
 fi
 
+echo "[INFO] Installing ansible collections."
+ansible-galaxy collection install community.general
+
 ### Execute ansible
 echo "[INFO] Executing ansible."
 ansible-playbook -vv -i ansible/hosts ansible/playbook.yml -K
@@ -32,7 +35,7 @@ else
   sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   sh ~/.dotfiles/link.sh
-  source ~/.zshrc
+  source ~/.config/fish/config.fish
 fi
 
 ### Create .gitconfig.local
