@@ -1,53 +1,71 @@
 #!/bin/sh
-which brew >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-  echo "[INFO] homebrew is not installed."
-  echo "[INFO] installing homebrew."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo "[INFO] updating homebrew."
-  brew update
+#
+# macOS provisioning bootstrap (Nix).
+# Installs Nix, applies the nix-darwin config, then links the dotfiles.
+#
+#   sh setup.sh           # work (default)
+#   sh setup.sh work
+#   sh setup.sh private
+#
+set -e
+
+PROFILE="${1:-work}"
+
+# Install Nix if missing.
+if ! command -v nix >/dev/null 2>&1; then
+  echo "[INFO] Installing Nix (Determinate Systems installer)..."
+  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix \
+    | sh -s -- install --no-confirm
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 else
-  echo "[INFO] homebrew is already installed."
+  echo "[INFO] Nix is already installed."
 fi
 
-which ansible >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-  echo "[INFO] installing ansible."
-  brew install ansible
+# Lock as the current user. The switch below runs under sudo; locking first
+# keeps root from writing (and chowning) flake.lock.
+echo "[INFO] Ensuring flake.lock (as current user)..."
+nix flake lock
+
+# Apply. On the first run darwin-rebuild isn't on PATH yet, so bootstrap it
+# from the nix-darwin flake.
+echo "[INFO] Applying nix-darwin configuration: ${PROFILE}"
+if ! command -v darwin-rebuild >/dev/null 2>&1; then
+  sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ".#${PROFILE}"
 else
-  echo "[INFO] ansible is already installed."
+  sudo darwin-rebuild switch --flake ".#${PROFILE}"
 fi
 
-echo "[INFO] Installing ansible collections."
-ansible-galaxy collection install community.general
+# Make the freshly installed tools (git, etc.) available in this session.
+export PATH="/run/current-system/sw/bin:$PATH"
 
-### Execute ansible
-echo "[INFO] Executing ansible."
-ansible-playbook -vv -i ansible/hosts ansible/playbook.yml -K
-
-### Prepare .dotfiles
-echo "[INFO] Preparing dotfiles."
-if [ -d ~/.dotfiles ]; then
-  echo "[INFO] .dotfiles already exists."
+# Clone dotfiles and let the repo link itself via its own link.sh.
+DOTFILES="$HOME/.dotfiles"
+if [ ! -d "$DOTFILES" ]; then
+  echo "[INFO] Cloning dotfiles..."
+  git clone https://github.com/hidapple/dotfiles.git "$DOTFILES"
+  curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim" --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  sh "$DOTFILES/link.sh"
 else
-  echo "[INFO] Creating .dotfiles"
-  git clone https://github.com/hidapple/dotfiles.git ~/.dotfiles
-  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  sh ~/.dotfiles/link.sh
-  source ~/.config/fish/config.fish
+  echo "[INFO] ${DOTFILES} already exists (run 'sh ${DOTFILES}/link.sh' to relink)."
 fi
 
-### Create .gitconfig.local
-echo "[INFO] Create .gitconfig.local."
-if [ -f $XDG_CONFIG_HOME/git/config.local ]; then
-  echo "[INFO] git local config file already exists."
+# git identity stays out of any repo. After link.sh, ~/.config/git is a symlink
+# into the dotfiles tree, where config.local is gitignored; the dotfiles'
+# git/config [include]s it.
+GIT_LOCAL="$HOME/.config/git/config.local"
+if [ ! -f "$GIT_LOCAL" ]; then
+  echo "[INFO] Creating ${GIT_LOCAL} (kept out of any repo)."
+  mkdir -p "$(dirname "$GIT_LOCAL")"
+  printf 'git user name : ' ; read -r git_name
+  printf 'git user email: ' ; read -r git_email
+  {
+    echo "[user]"
+    echo "	name  = ${git_name}"
+    echo "	email = ${git_email}"
+  } > "$GIT_LOCAL"
 else
-  echo "name: \c" && read name
-  echo "email: \c" && read email
-  echo "[user]" > $XDG_CONFIG_HOME/git/config.local
-  echo "  name  = $name" >> $XDG_CONFIG_HOME/git/config.local
-  echo "  email = $email" >> $XDG_CONFIG_HOME/git/config.local
-  echo "[INFO] Created git local config file."
+  echo "[INFO] ${GIT_LOCAL} already exists."
 fi
 
+echo "[INFO] Done."

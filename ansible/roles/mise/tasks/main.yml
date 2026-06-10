@@ -1,4 +1,0 @@
-- name: Install latest Python
-  shell: |
-    mise install python@3.13.5
-    mise use -g python@3.13.5

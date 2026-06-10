@@ -1,3 +1,0 @@
-- name: Install neovim 
-  shell: |
-    pip install pynvim
