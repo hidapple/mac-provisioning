@@ -59,9 +59,6 @@
   system.defaults.NSGlobalDomain."com.apple.trackpad.scaling" = 2.0;
   system.defaults.CustomUserPreferences.NSGlobalDomain."com.apple.mouse.scaling" = 2.0;
 
-  # Pointer (cursor) size (1.0 normal - 4.0 largest).
-  system.defaults.universalaccess.mouseDriverCursorSize = 3.0;
-
   # Fast key repeat; disable press-and-hold accent menu (better for vim).
   system.defaults.NSGlobalDomain.KeyRepeat = 2;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 12;

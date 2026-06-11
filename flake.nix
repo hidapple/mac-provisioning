@@ -15,9 +15,8 @@
   let
     system = "aarch64-darwin";
 
-    # Build one machine's config. work/private only differ by username for now;
-    # add a per-profile module to `modules` here if they ever diverge.
-    mkDarwin = username:
+    # Build one machine's config. extraModules holds profile-specific config.
+    mkDarwin = { username, extraModules ? [] }:
       nix-darwin.lib.darwinSystem {
         inherit system;
         specialArgs = { inherit username; };
@@ -31,15 +30,20 @@
             home-manager.extraSpecialArgs = { inherit username; };
             home-manager.users.${username} = import ./home/home.nix;
           }
-        ];
+        ] ++ extraModules;
       };
   in
   {
     # sudo darwin-rebuild switch --flake .#work    (work Mac)
     # sudo darwin-rebuild switch --flake .#private  (personal Mac)
     darwinConfigurations = {
-      work    = mkDarwin "s-hida";
-      private = mkDarwin "hidapple";
+      work = mkDarwin {
+        username = "s-hida";
+        extraModules = [ ./darwin/work.nix ];
+      };
+      private = mkDarwin {
+        username = "shoheihida";
+      };
     };
   };
 }
