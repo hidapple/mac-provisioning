@@ -26,7 +26,7 @@ sudo darwin-rebuild switch --flake .#work
 Two machines, differing only by username (set in `flake.nix`):
 
 - `work` — `s-hida`
-- `private` — `hidapple`
+- `private` — `shoheihida`
 
 ## Layout
 
