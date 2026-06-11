@@ -5,9 +5,6 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  # claude-code is unfree.
-  nixpkgs.config.allowUnfree = true;
-
   system.primaryUser = username;
 
   # home-manager reads the user's home dir from here. Metadata only (not in
@@ -29,8 +26,6 @@
     fzf
     universal-ctags
     ghq
-    claude-code
-    codex
   ];
 
   programs.fish.enable = true;

@@ -50,6 +50,17 @@ else
   echo "[INFO] ${DOTFILES} already exists (run 'sh ${DOTFILES}/link.sh' to relink)."
 fi
 
+# Fast-moving AI CLIs stay out of Nix (nixpkgs lags and they self-update or
+# update via npm). Node itself comes from mise, which home-manager installed.
+export PATH="/etc/profiles/per-user/$(whoami)/bin:$PATH"
+echo "[INFO] Installing node (mise) and npm-global CLIs..."
+mise use -g node@lts
+mise exec -- npm install -g @openai/codex
+if ! command -v claude >/dev/null 2>&1 && [ ! -x "$HOME/.local/bin/claude" ]; then
+  echo "[INFO] Installing Claude Code (native installer)..."
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+
 # git identity stays out of any repo. After link.sh, ~/.config/git is a symlink
 # into the dotfiles tree, where config.local is gitignored; the dotfiles'
 # git/config [include]s it.
