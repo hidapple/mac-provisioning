@@ -43,6 +43,7 @@
       };
       private = mkDarwin {
         username = "shoheihida";
+        extraModules = [ ./darwin/private.nix ];
       };
     };
   };
