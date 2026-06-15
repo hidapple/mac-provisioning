@@ -26,6 +26,7 @@
     fzf
     universal-ctags
     ghq
+    gh
   ];
 
   programs.fish.enable = true;
