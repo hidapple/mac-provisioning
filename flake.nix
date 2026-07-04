@@ -1,6 +1,12 @@
 {
   description = "hidapple's macOS environment (nix-darwin + home-manager)";
 
+  # numtide cache for llm-agents.nix (avoids building herdr etc. from source).
+  nixConfig = {
+    extra-substituters = [ "https://cache.numtide.com" ];
+    extra-trusted-public-keys = [ "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
@@ -9,9 +15,13 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # AI coding agent tools (codex etc.), auto-updated daily by numtide.
+    # No nixpkgs follows: keeping their pinned nixpkgs keeps the binary cache usable.
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager }:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, llm-agents }:
   let
     system = "aarch64-darwin";
 
@@ -21,6 +31,9 @@
         inherit system;
         specialArgs = { inherit username; };
         modules = [
+          # Exposes pkgs.llm-agents.<tool> built against the input's own nixpkgs pin.
+          { nixpkgs.overlays = [ llm-agents.overlays.default ]; }
+
           ./darwin/configuration.nix
 
           home-manager.darwinModules.home-manager

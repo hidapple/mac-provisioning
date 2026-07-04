@@ -27,6 +27,10 @@
     universal-ctags
     ghq
     gh
+    # AI agent tools from the llm-agents.nix overlay
+    llm-agents.herdr # terminal multiplexer for AI agents
+    llm-agents.claude-code
+    llm-agents.codex
   ];
 
   programs.fish.enable = true;
