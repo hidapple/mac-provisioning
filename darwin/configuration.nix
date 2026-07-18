@@ -33,6 +33,9 @@
     llm-agents.codex
   ];
 
+  # nix-darwin defaults EDITOR to nano; herdr etc. fall back to $EDITOR.
+  environment.variables.EDITOR = "nvim";
+
   programs.fish.enable = true;
 
   # programs.fish.enable does not register fish in /etc/shells on darwin.
