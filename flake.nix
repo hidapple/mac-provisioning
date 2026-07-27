@@ -31,8 +31,11 @@
         inherit system;
         specialArgs = { inherit username; };
         modules = [
-          # Exposes pkgs.llm-agents.<tool> built against the input's own nixpkgs pin.
-          { nixpkgs.overlays = [ llm-agents.overlays.default ]; }
+          # Exposes pkgs.llm-agents.<tool> from the input's prebuilt packages
+          # (pinned to its own nixpkgs, so the numtide binary cache is usable).
+          # Upstream removed overlays.default; its shared-nixpkgs overlay would
+          # rebuild everything against our nixpkgs instead.
+          { nixpkgs.overlays = [ (final: prev: { llm-agents = llm-agents.packages.${system}; }) ]; }
 
           ./darwin/configuration.nix
 
