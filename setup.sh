@@ -50,12 +50,11 @@ else
   echo "[INFO] ${DOTFILES} already exists (run 'sh ${DOTFILES}/link.sh' to relink)."
 fi
 
-# Fast-moving AI CLIs stay out of Nix (nixpkgs lags and they self-update or
-# update via npm). Node itself comes from mise, which home-manager installed.
+# Node comes from mise, which home-manager installed. AI CLIs are provided by
+# nix-darwin, so do not install a second Codex through npm.
 export PATH="/etc/profiles/per-user/$(whoami)/bin:$PATH"
-echo "[INFO] Installing node (mise) and npm-global CLIs..."
+echo "[INFO] Installing node (mise)..."
 mise use -g node@lts
-mise exec -- npm install -g @openai/codex
 if ! command -v claude >/dev/null 2>&1 && [ ! -x "$HOME/.local/bin/claude" ]; then
   echo "[INFO] Installing Claude Code (native installer)..."
   curl -fsSL https://claude.ai/install.sh | bash
